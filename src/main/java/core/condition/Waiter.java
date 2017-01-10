@@ -1,7 +1,7 @@
 package core.condition;
 
 
-import core.appium.AppiumExtDriver;
+import core.appium.driver.AppiumExtDriver;
 import org.apache.commons.collections4.PredicateUtils;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.SearchContext;

@@ -20,7 +20,6 @@ public enum MainMenu implements LangEnum {
         this.rusName = rusName;
         this.engName = engName;
         this.pageName = pageName;
-
     }
 
     private String rusName;
@@ -28,12 +27,12 @@ public enum MainMenu implements LangEnum {
     private String pageName;
 
     @Override
-    public String getRusName(){
+    public String getRusText(){
         return this.rusName;
     }
 
     @Override
-    public String getEngName(){
+    public String getRuEnValue(){
         return this.engName;
     }
 

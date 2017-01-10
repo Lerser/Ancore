@@ -1,8 +1,9 @@
 package autotest.android.pages;
 
-import autotest.android.pages.page_enum.MainMenu;
 import core.appium.enums.MobilePlatform;
 import core.appium.page.MobileBasePage;
+import core.condition.SearchContextConditions;
+import core.condition.Waiter;
 import core.locator.ByLocator;
 import core.logger.LevelLogger;
 import org.openqa.selenium.By;
@@ -12,27 +13,44 @@ import org.openqa.selenium.By;
  */
 public class LogIn extends MobileBasePage {
 
-    private static final By MAIN_LOGIN = new ByLocator("//android.widget.Button[@resource-id=" +
-            "'com.mgrmobi.intouch:id/button_login']", true);
+    private static final By EMAIL = new ByLocator("//android.widget.RelativeLayout[@resource-id=" +
+            "'com.mgrmobi.intouch:id/et_email'", true);
+    private static final By PASSWORD = new ByLocator("//android.widget.RelativeLayout[@resource-id=" +
+            "'com.mgrmobi.intouch:id/et_password'", true);
+    private static final By LOGIN = new ByLocator("//android.widget.Button[@resource-id=" +
+            "'com.mgrmobi.intouch:id/button_login'", true);
+
+    private static final By PRE_LOADER = new ByLocator("//android.widget.ImageView[@resource-id=" +
+            "'com.mgrmobi.intouch:id/progress_view'", true);
+
+
+
 
     public LogIn() {
         super(MobilePlatform.ANDROID);
     }
 
-
-    public <T extends MobileBasePage> T selectMainMenu(MainMenu mainMenu) {
-        By locator = new ByLocator(String.format(MAIN_LOGIN, mainMenu.getRusName()), true);
-        logger.log(LevelLogger.SCREEN_ACTION, String.format("Выбираем пункт меню '%s', нажимаем на " +
-                "элемент c xpath: '%s'", mainMenu.getRusName(), locator.toString()));
-        getSearchContext().findElement(locator).click();
-        Class cl = null;
-        try {
-            cl = Class.forName(mainMenu.getPageNameClass());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return (T)mobilePageFactory.createPage(cl);
-
+    public LogIn typeEmail(String email) {
+        logger.log(LevelLogger.SCREEN_ACTION, String.format("Вводим email в элемент c xpath: '%s'", EMAIL.toString()));
+        getSearchContext().findElement(EMAIL).sendKeys(email);
+        return this;
     }
+
+    public LogIn typePassword(String password) {
+        logger.log(LevelLogger.SCREEN_ACTION, String.format("Вводим пароль в элемент c xpath: '%s'", PASSWORD.toString()));
+        getSearchContext().findElement(PASSWORD).sendKeys(password);
+        return this;
+    }
+
+    public ShowappPage login() {
+        logger.log(LevelLogger.SCREEN_ACTION, String.format("Открываем страницу авторизации, нажимаем на " +
+                "Войти, элемент c xpath: '%s'", LOGIN.toString()));
+        getSearchContext().findElement(LOGIN).click();
+        Waiter.waitContext(getSearchContext(), MobileBasePage.LOAD_PAGE_SECONDS).withMessage(String.format("Страница " +
+                "после авторизации страница не загрузилась в течении %d секунд.", MobileBasePage.LOAD_PAGE_SECONDS)).
+                until(SearchContextConditions.invisibilityOfElementLocated(PRE_LOADER));
+        return mobilePageFactory.createPage(ShowappPage.class);
+    }
+//TODO Add login by Social Networks
 
 }

@@ -1,16 +1,19 @@
 package core.appium.page;
 
 import com.google.common.base.Preconditions;
-import core.appium.AppiumExtDriver;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.SearchContext;
+
+import core.appium.driver.AppiumExtDriver;
 import core.appium.enums.MobilePlatform;
 import core.ios.IosLocator;
 import core.logger.ThreadLogger;
-import org.apache.log4j.Logger;
-import org.openqa.selenium.SearchContext;
+
 
 /**
  * Created by zaborovsky on 21.12.2016.
  */
+
 public class MobileBasePage {
 
     public static final int LOAD_PAGE_SECONDS = 120;
@@ -19,9 +22,15 @@ public class MobileBasePage {
     protected Logger logger = ThreadLogger.getThreadLogger();
     private SearchContext searchContext;
     private IosLocator iosParentLocator;
-//    public MobileBasePage(MobilePlatform platform) {
-//        this.searchContext = AppiumExtDriver.getDriver(platform);
-//    }
+
+
+    /**
+     * Когда контекстом поиска является сам драйвер
+     */
+
+    public MobileBasePage(MobilePlatform platform) {
+        this.searchContext = AppiumExtDriver.getDriver(platform);
+    }
 
 
     public MobileBasePage(MobilePlatform platform, IosLocator iosParentLocator) {
@@ -48,5 +57,7 @@ public class MobileBasePage {
         Preconditions.checkNotNull(searchContext, "Контекст поиска не может быть равен null.");
         this.searchContext = searchContext;
     }
+
+    protected IosLocator getIosParentLocator() { return iosParentLocator;}
 
 }

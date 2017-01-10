@@ -1,6 +1,6 @@
 package core.condition;
 
-import core.appium.AppiumExtDriver;
+import core.appium.driver.AppiumExtDriver;
 import core.ios.IosLocator;
 import core.logger.LevelLogger;
 import core.logger.ThreadLogger;
