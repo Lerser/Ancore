@@ -8,11 +8,12 @@ package autotest.android.pages.page_enum;
 public enum MainMenu implements LangEnum {
 
     Live("LIVE", "LIVE",""),
+    Logo("Showapp", "Showapp",""),
     Search("Поиск","Search","SearchPage"),
     Available("Доступные","",""),
     Activities("Активности","",""),
     Create("Создать","",""),
-    Profile("Профиль","Profile",""),
+    Profile("Профиль","Profile","ProfilePage"),
     Settings("Настройки", "Settings",""),
     Exit("Выход","Exit","");
 
@@ -37,7 +38,7 @@ public enum MainMenu implements LangEnum {
     }
 
     public String getPageNameClass() {
-        return "autotest.page." + pageName;
+        return "autotest.android.pages." + pageName;
     }
 
 }

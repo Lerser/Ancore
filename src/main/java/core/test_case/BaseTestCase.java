@@ -47,6 +47,9 @@ public class BaseTestCase extends AbstractTestNGSpringContextTests implements IH
 
 
     private String valueParameters = "";
+
+
+
     @BeforeClass
     public void initContext(ITestContext iTestContext) {
         this.iTestContext = iTestContext;
